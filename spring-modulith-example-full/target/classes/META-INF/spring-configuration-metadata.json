@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "example.inventory",
+      "type": "example.inventory.InventorySettings",
+      "sourceType": "example.inventory.InventorySettings"
+    }
+  ],
+  "properties": [
+    {
+      "name": "example.inventory.stock-threshold",
+      "type": "java.lang.Integer",
+      "sourceType": "example.inventory.InventorySettings",
+      "defaultValue": 0
+    }
+  ],
+  "hints": []
+}
