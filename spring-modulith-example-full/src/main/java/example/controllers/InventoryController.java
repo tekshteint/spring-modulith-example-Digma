@@ -23,7 +23,6 @@ public class InventoryController {
     }
 
     @GetMapping("/create")
-    @WithSpan
     public String createOrder() {
         Order order = new Order();
 

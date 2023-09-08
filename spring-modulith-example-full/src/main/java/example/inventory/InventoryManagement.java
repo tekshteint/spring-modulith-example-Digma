@@ -39,7 +39,6 @@ class InventoryManagement {
 	private final InventoryInternal dependency;
 
 	//event listener
-	@WithSpan
 	@ApplicationModuleListener
 	void on(OrderCompleted event) throws InterruptedException {
 
