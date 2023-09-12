@@ -16,12 +16,15 @@
 package example.order;
 
 import example.order.internal.OrderInternal;
+import example.shipping.ShippingManagement;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import example.StatusChangeEvent;
 
 /**
  * @author Oliver Drotbohm
@@ -35,7 +38,26 @@ public class OrderManagement {
 
 	//event publisher
 	@Transactional
+	//@Async
 	public void complete(Order order) {
+		checkState(order);
 		events.publishEvent(new OrderCompleted(order.getId()));
+
 	}
+
+	public void checkState(Order order){
+		if (order.getId().hashCode() % 2 == 0){
+			events.publishEvent(new StatusChangeEvent(this, "orderMangement", "inactive"));
+			System.out.println("IN ORDERMANAGEMENT CHECKSTATE IF");
+		} else {
+			events.publishEvent(new StatusChangeEvent(this, "orderMangement", "active"));
+			System.out.println("IN ORDERMANAGEMENT CHECKSTATE ELSE");
+		}
+
+	}
+
+	public String getOrderID(Order order){
+		return order.getId().toString();
+	}
+
 }

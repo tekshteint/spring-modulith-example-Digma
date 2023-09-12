@@ -1,0 +1,43 @@
+Flow of control:
+
+Program start: Order publishes a new synchronous event
+
+Check state checks the order ID and either
+
+	changes state for orderManagement (A) to inactive if orderID % 2 == 0 (sync publisher)
+
+	or
+
+	changes State for orderManagement (A) to active if orderID % 2 != 0 (sync publisher)
+
+
+
+-------------
+ A is active
+-------------
+Customer (C) listener is triggered and (currently) prints out to console as such
+
+
+---------------
+ A is inactive
+---------------
+Shipping (B) async listener is triggered and prints to out to console as such
+
+
+
+---------------------
+ InventoryController
+---------------------
+/inventory/create endpoint creates and completes (publishes) a new order (A)
+	This will also trigger a new state just like the start of the program
+
+--------------------
+ ShippingController
+--------------------
+/shipping/complete endpoint creates and completes (publishes) a new async shipment (B)
+
+
+--------------------
+ ShipmentManagement
+--------------------
+completing a shipment (publishing an async event) prints to console as such along with the shipmentID
